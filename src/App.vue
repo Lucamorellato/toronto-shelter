@@ -4,7 +4,12 @@
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link>
     </div>
-    <router-view/>
+    <transition
+        name="fade"
+        mode="out-in"
+      >
+      <router-view/>
+    </transition>
   </div>
 </template>
 
@@ -28,5 +33,18 @@
 
 #nav a.router-link-exact-active {
   color: #42b983;
+}
+
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: 300ms cubic-bezier(.4,.4,.25,1);
+  transition-property: opacity;
+
+}
+
+.fade-enter,
+.fade-leave-active {
+  opacity: 0
 }
 </style>

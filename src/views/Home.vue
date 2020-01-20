@@ -2,20 +2,27 @@
   <div class="home">
     <h1>Toronto Shelter Occupancy</h1>
     <div class="loader" v-if="loading">loading</div>
-    <div class="content" v-if="!loading">
-      <h2>{{this.months[`${new Date().getMonth()}`]}} {{new Date().getDate()}} Statistics:</h2>
+    <section class="hero-content" v-if="!loading">
+      <h2>{{this.months[`${new Date().getMonth()}`]}} {{new Date().getDate() - 1}} Statistics:</h2>
       <p>{{this.occupiedBeds}} / {{this.totalBeds}}</p>
-      <p>{{this.capacityPercentage}}</p>
-
-    </div>
+      <p>{{this.occupiedPercentage}}</p>
+    </section>
+    <section class="shelters">
+      <div class="sector" v-for='(sector, i) in typesOfShelters' :key='i'>
+        <SectorList :sector="sector" :i="i" :sheltersOrganized="sheltersOrganized[i]" />
+      </div>
+    </section>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
+import SectorList from '../components/SectorList.vue'
 import axios from 'axios'
 export default {
   name: 'home',
+  components: {
+    SectorList
+  },
 
   data() {
     return {
@@ -35,7 +42,8 @@ export default {
         'Oct',
         'Nov',
         'Dec'
-      ]
+      ],
+      typesOfShelters: [],
     }
   },
 
@@ -43,16 +51,17 @@ export default {
     axios.get('https://secure.toronto.ca/c3api_data/v2/DataAccess.svc/ssha/extractssha?$format=application/json;odata.metadata=none&$top=1000&$orderby=OCCUPANCY_DATE desc')
       .then(response => {
         this.info = response.data.value
+        this.typesOfShelters = [...new Set(response.data.value.map(s => s.SECTOR))]
+        this.show = this.typesOfShelters.map(() => false)
       })
       .catch(error => {
         console.log(error)
-        this.errored = true
+        this.error = true
       })
       .finally(() => this.loading = false)
   },
   
   computed: {
-
     mostRecentOccupancyDate(){
       return new Date(Math.max.apply(null, this.info.map(function(e) {
         return new Date(e.OCCUPANCY_DATE);
@@ -67,10 +76,6 @@ export default {
           return (date >= startDate && date <= endDate);
         });
       return currentData
-    },
-
-    typesOfShelters(){
-      return [...new Set(this.currentData.map(s => s.SECTOR))];
     },
 
     sheltersOrganized(){
@@ -89,14 +94,28 @@ export default {
         return acc + currentValue.OCCUPANCY
       }, 0);
     },
-    capacityPercentage(){
+    occupiedPercentage(){
       let result = ((this.occupiedBeds / this.totalBeds)*100).toFixed(1)
       return `${result}%`
     },
   },
 
   methods: {
-    
+  
   }
 }
 </script>
+
+<style>
+
+.card {
+  /* height: 100px; */
+}
+.fade-enter-active, .fade-leave-active {
+  height: 100px;
+  transition: opacity .5s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  height: 0px;
+}
+</style>
