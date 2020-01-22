@@ -1,10 +1,10 @@
 <template>
-    <div class="card" :style="`background: ${capacity}`">
+    <li class="card" :style="`background: ${capacityColor}`">
         {{shelter.SHELTER_NAME}}
         {{shelter.PROGRAM_NAME}}
         {{shelter.OCCUPANCY}} /  {{shelter.CAPACITY}}
         <a :href="`https://maps.google.com/?q=${shelter.SHELTER_ADDRESS}, ${shelter.SHELTER_CITY}, ${shelter.SHELTER_POSTAL_CODE}`" target="_blank">Open in Maps <img class="map-marker" :src="require(`@/assets/map-marker.png`)" alt=""></a> 
-    </div>
+    </li>
 </template>
 
 <script>
@@ -18,7 +18,7 @@ computed: {
       let result = ((this.shelter.OCCUPANCY / this.shelter.CAPACITY)*100).toFixed(1)
       return result
     },
-    capacity(){
+    capacityColor(){
         let capacity = parseInt(this.occupiedPercentage)
         if (capacity > 99) {
             return 'red'
@@ -27,9 +27,8 @@ computed: {
         } else if (capacity >= 80) {
             return 'yellow'
         } else {
-            return 'black'
+            return '#613144'
         }
-       
     }
 },
 methods: {
@@ -38,7 +37,7 @@ methods: {
 }
 </script>
 
-<style>
+<style scoped>
 
 .card {
     margin-bottom: 40px;

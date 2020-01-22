@@ -1,29 +1,61 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+      <router-link exact to="/">Home</router-link> |
+      <router-link exact to="/about">About</router-link>
     </div>
     <transition
         name="fade"
         mode="out-in"
       >
-      <router-view/>
+      <div class="loader" v-if="loading"></div>
+      <router-view v-else :info="info" :typesOfShelters="typesOfShelters"/>
+    </transition>
+    <transition
+        name="fade"
+        mode="out-in"
+      >
+      <Footer v-if="this.$route.name == 'about'" />
     </transition>
   </div>
 </template>
 
-<style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+<script>
+import Footer from './components/Footer.vue'
+import axios from 'axios'
+export default {
+  components: {
+    Footer
+  },
+  data() {
+    return {
+      error: false,
+      info: null,
+      loading: true,
+      typesOfShelters: [],
+    }
+  },
+  mounted () {
+    axios.get('https://secure.toronto.ca/c3api_data/v2/DataAccess.svc/ssha/extractssha?$format=application/json;odata.metadata=none&$top=1000&$orderby=OCCUPANCY_DATE desc')
+      .then(response => {
+        this.info = response.data.value
+        this.typesOfShelters = [...new Set(response.data.value.map(s => s.SECTOR))]
+      })
+      .catch(error => {
+        // console.log(error)
+        this.error = error
+      })
+      .finally(() => this.loading = false)
+  },
 }
+</script>
 
+<style scoped>
+/* Nav Styles */
 #nav {
-  padding: 30px;
+  padding: 2rem;
+  font-size: 1.2rem;
+  background: darkgrey;
 }
 
 #nav a {
@@ -32,19 +64,9 @@
 }
 
 #nav a.router-link-exact-active {
-  color: #42b983;
+  color: rgb(41, 204, 84);
 }
+/* end of Nav Styles */
 
-
-.fade-enter-active,
-.fade-leave-active {
-  transition: 300ms cubic-bezier(.4,.4,.25,1);
-  transition-property: opacity;
-
-}
-
-.fade-enter,
-.fade-leave-active {
-  opacity: 0
-}
 </style>
+

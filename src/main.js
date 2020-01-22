@@ -9,4 +9,7 @@ new Vue({
   router,
   store,
   render: h => h(App)
+  
 }).$mount('#app')
+
+require('./css/normalize.css');

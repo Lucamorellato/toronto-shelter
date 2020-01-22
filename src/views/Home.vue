@@ -1,34 +1,43 @@
 <template>
   <div class="home">
-    <h1>Toronto Shelter Occupancy</h1>
-    <div class="loader" v-if="loading">loading</div>
-    <section class="hero-content" v-if="!loading">
+    <section class="hero-content">
+      <h1>Toronto Shelter Occupancy</h1>
       <h2>{{this.months[`${new Date().getMonth()}`]}} {{new Date().getDate() - 1}} Statistics:</h2>
       <p>{{this.occupiedBeds}} / {{this.totalBeds}}</p>
-      <p>{{this.occupiedPercentage}}</p>
+      <Graph :occupiedPercentage='occupiedPercentage' :sector='sector' :capacityColor='capacityColor' />
+    </section>
+    <section class="sectors">
+      <div v-for='(sector, i) in typesOfShelters' :key='i'>
+        <Sector :sector='sector' :i='i' :sheltersOrganized='sheltersOrganized[i]' :handleClick='handleClick' />
+      </div>
     </section>
     <section class="shelters">
-      <div class="sector" v-for='(sector, i) in typesOfShelters' :key='i'>
-        <SectorList :sector="sector" :i="i" :sheltersOrganized="sheltersOrganized[i]" />
+      <div v-for='(sector, i) in typesOfShelters' :key='i'>
+         <SectorList :sector='sector' :i='i' :show='show' :sheltersOrganized='sheltersOrganized[i]' />
       </div>
     </section>
   </div>
 </template>
 
 <script>
+import Sector from '../components/Sector.vue'
 import SectorList from '../components/SectorList.vue'
-import axios from 'axios'
+import Graph from '../components/Graph.vue'
+
 export default {
   name: 'home',
   components: {
-    SectorList
+    Sector,
+    SectorList,
+    Graph
+  },
+  props: {
+    info: Array,
+    typesOfShelters: Array,
   },
 
   data() {
     return {
-      error: false,
-      info: null,
-      loading: true,
       months: [
         'Jan',
         'Feb',
@@ -43,24 +52,10 @@ export default {
         'Nov',
         'Dec'
       ],
-      typesOfShelters: [],
+      show: [null],
     }
   },
 
-  mounted () {
-    axios.get('https://secure.toronto.ca/c3api_data/v2/DataAccess.svc/ssha/extractssha?$format=application/json;odata.metadata=none&$top=1000&$orderby=OCCUPANCY_DATE desc')
-      .then(response => {
-        this.info = response.data.value
-        this.typesOfShelters = [...new Set(response.data.value.map(s => s.SECTOR))]
-        this.show = this.typesOfShelters.map(() => false)
-      })
-      .catch(error => {
-        console.log(error)
-        this.error = true
-      })
-      .finally(() => this.loading = false)
-  },
-  
   computed: {
     mostRecentOccupancyDate(){
       return new Date(Math.max.apply(null, this.info.map(function(e) {
@@ -68,6 +63,7 @@ export default {
       })));
     },
 
+    // THIS IS THE CORRECT WAY TO FILTER BY OCCUPANCY_DATE which is not currently being updated by the API
     currentData(){
       const startDate = this.mostRecentOccupancyDate
       const endDate = new Date()
@@ -101,21 +97,39 @@ export default {
   },
 
   methods: {
-  
-  }
+    handleClick(e){
+      e === this.show[0] ? (this.show.pop(), this.show.push(null)) : (this.show.pop(), this.show.push(e));
+    }
+  },
 }
 </script>
 
-<style>
+<style scoped>
 
-.card {
-  /* height: 100px; */
+.home {
+  max-width: 1280px;
+  margin: 0 auto;
 }
-.fade-enter-active, .fade-leave-active {
-  height: 100px;
-  transition: opacity .5s;
+
+.hero-content {
+  text-align: center;
 }
-.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
-  height: 0px;
+
+.sectors {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
 }
+@media (max-width: 1128px) {
+  .sectors {
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 3rem 1rem;
+  }
+}
+@media (max-width: 680px) {
+  .sectors {
+    grid-template-columns: 1fr;
+    grid-gap: 3rem;
+  }
+}
+
 </style>
