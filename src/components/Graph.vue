@@ -31,7 +31,6 @@ export default {
 <style>
 /* circle chart */
 .single-chart {
-  width: 33%;
   justify-content: space-around ;
 }
 
@@ -62,22 +61,22 @@ export default {
 }
 
 .circular-chart.red .circle {
-  stroke: rgb(245, 90, 66);
+  stroke: rgb(245, 70, 20);
 }
 .circular-chart.red .circle-bg {
-  fill: rgba(245, 90, 66, 0.2);
+  fill: rgba(245, 70, 20, 0.2);
 }
 .circular-chart.orange .circle {
-  stroke: rgb(245, 156, 66);
+  stroke: rgb(245, 146, 25);
 }
 .circular-chart.orange .circle-bg {
-  fill: rgba(245, 156, 66, 0.2);
+  fill: rgba(245, 146, 25, 0.2);
 }
 .circular-chart.yellow .circle {
-  stroke: rgb(240, 234, 98);
+  stroke: rgb(250, 230, 0);
 }
 .circular-chart.yellow .circle-bg {
-  fill: rgba(240, 234, 98, 0.2);
+  fill: rgba(250, 230, 0, 0.2);
 }
 
 .circular-chart.normal .circle {
@@ -88,9 +87,10 @@ export default {
 }
 
 .percentage {
-  fill: #666;
+  fill: #3E00ED;
   font-family: sans-serif;
-  font-size: 0.5em;
+  font-size: 0.4em;
+  font-weight: bold;
   text-anchor: middle;
 }
 

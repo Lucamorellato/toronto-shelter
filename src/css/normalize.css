@@ -7,6 +7,9 @@
 
 html {
     font-size: 62.5%;
+    background: url('~@/assets/blobs.svg');
+    background-size: cover;
+    background-attachment: fixed;
 }
 
 body {
@@ -16,29 +19,35 @@ body {
 
 .wrapper {
   max-width: 1350px;
-  width: 80%;
+  width: 85%;
   margin: 0 auto;
+  position: relative;
 }
 
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: #2c3e50;
-  background:rgb(252, 252, 252);
+  color: #3E00ED;
+  /* background:rgb(252, 252, 252); */
   min-height: 100vh;
+  position: relative;
 }
 
 /* general text styles */
 h1 {
+  margin: 0;
   padding-top: 8rem;
-  font-size: 40px;
+  font-size: 4.5rem;
+  line-height: 1.3;
 }
 h2 {
-  font-size: 28px;
+  margin: 0;
+  font-size: 2.8rem;
 }
 h3 {
-  font-size: 22px;
+  margin: 0;
+  font-size: 2.2rem;
 }
 
 ul,li{list-style: none;margin: 0;padding: 0;}
@@ -53,7 +62,7 @@ ul,li{list-style: none;margin: 0;padding: 0;}
     padding: 0;
     border: 8px solid rgb(213, 213, 213);
     border-radius: 50%;
-    border-top: 8px solid #165788;
+    border-top: 8px solid #3E00ED;
     width: 45px;
     height: 45px;
     animation: spin 1s cubic-bezier(.4,.4,.25,1) infinite;
@@ -69,7 +78,7 @@ ul,li{list-style: none;margin: 0;padding: 0;}
 /* page fade transitions */
 .fade-enter-active,
 .fade-leave-active {
-  transition: 100ms cubic-bezier(.4,.4,.25,1)
+  transition: 100ms cubic-bezier(.4,.4,.25,1);
 }
 
 .fade-enter,
@@ -77,3 +86,21 @@ ul,li{list-style: none;margin: 0;padding: 0;}
   opacity: 0
 }
 /* end of page fade transitions */
+
+/* media */
+@media (max-width: 680px) {
+  html {
+    background-position: right;
+  }
+  .wrapper {
+    width: 100%;
+    margin: 0 20px;
+  }
+  h1 {
+    font-size: 3.2rem;
+    line-height: 1.1;
+  }
+  h2 {
+    font-size: 2.2rem;
+  }
+}

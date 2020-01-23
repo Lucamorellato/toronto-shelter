@@ -1,16 +1,12 @@
 <template>
-  <div class="home">
+  <div class="home wrapper">
     <section class="hero-content">
-      <h1>Toronto Shelter Occupancy</h1>
-      <h2>{{this.months[`${new Date().getMonth()}`]}} {{new Date().getDate() - 1}} Shelter Capacity:</h2>
-      <Graph :occupiedPercentage='occupiedPercentage' :sector='sector' :capacityColor='capacityColor' />
-      <p class="numbers">{{this.occupiedBeds}} / {{this.totalBeds}} Beds</p>
+      <h1>Shelter <br/>Occupancy TO</h1>
+      <h2>{{this.months[`${new Date().getMonth()}`]}} {{new Date().getDate() - 1}}</h2>
     </section>
-    <section class="sect">
-      <h3>Sectors</h3>
-      <div class="sectors">
+    <section class="sectors">
+        <Sector sector='Total' :i='10' :sheltersOrganized='this.currentData' :handleClick='handleClick' />
         <Sector v-for='(sector, i) in typesOfShelters' :key='i' :sector='sector' :i='i' :sheltersOrganized='sheltersOrganized[i]' :handleClick='handleClick' />
-      </div>
     </section>
     <section class="shelters">
       <div v-for='(sector, i) in typesOfShelters' :key='i'>
@@ -23,14 +19,12 @@
 <script>
 import Sector from '../components/Sector.vue'
 import SectorList from '../components/SectorList.vue'
-import Graph from '../components/Graph.vue'
 
 export default {
   name: 'home',
   components: {
     Sector,
     SectorList,
-    Graph
   },
   props: {
     info: Array,
@@ -117,33 +111,21 @@ export default {
 </script>
 
 <style scoped>
-.home {
-  max-width: 1280px;
-  margin: 0 auto;
-}
 
-.hero-content {
-  text-align: center;
-  color: #165788;
-  displaY: flex;
-  flex-direction: column;
-  justify-content: center;
+.sectors {
+  padding: 8rem 0 10rem 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
   align-items: center;
 }
 
-.hero-content .numbers {
-  font-size: 20px;
-  font-weight: bold;
-}
-
-.sectors {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-}
 @media (max-width: 1128px) {
   .sectors {
+    display: grid;
     grid-template-columns: repeat(2, 1fr);
-    grid-gap: 3rem 1rem;
+    grid-gap: 3rem 2rem;
+    justify-items: center;
   }
 }
 @media (max-width: 680px) {
