@@ -35,13 +35,13 @@ export default {
         capacityColor(){
             let capacity = parseInt(this.occupiedPercentage)
             if (capacity >= 98) {
-                return '245, 90, 66'
+                return 'red'
             } else if (capacity >= 97) {
-                return '245, 156, 66'
+                return 'orange'
             } else if (capacity >= 85) {
-                return '240, 234, 98'
+                return 'yellow'
             } else {
-                return '41, 204, 84'
+                return 'normal'
             }
         }
     },

@@ -1,8 +1,10 @@
 <template>
-  <div id="app">
+  <div id="app" class="wrapper">
     <div id="nav">
-      <router-link exact to="/">Home</router-link> |
-      <router-link exact to="/about">About</router-link>
+      <span class="nav-buttons">
+        <router-link exact to="/">Home</router-link> |
+        <router-link exact to="/about">About</router-link>
+      </span>
     </div>
     <transition
         name="fade"
@@ -53,18 +55,35 @@ export default {
 <style scoped>
 /* Nav Styles */
 #nav {
-  padding: 2rem;
-  font-size: 1.2rem;
-  background: darkgrey;
-}
+  font-size: 16px;
+  display: flex;
+  justify-content: flex-end;
+  position: sticky;
+  top: 1.2rem;
+  box-shadow: 0 2px 2px -6px rgba(0,0,0,0.16);
 
+
+}
 #nav a {
   font-weight: bold;
-  color: #2c3e50;
+  color: #165788;
+  text-decoration: none;
+  transition:  color 200ms cubic-bezier(.4,.4,.25,1), background 200ms cubic-bezier(.4,.4,.25,1);
+}
+
+#nav .nav-buttons {
+  padding-right: 2rem;
 }
 
 #nav a.router-link-exact-active {
-  color: rgb(41, 204, 84);
+  border-bottom: 3px solid #165788;
+}
+#nav a.name {
+  font-size: 22px;
+  text-decoration: none;
+  color: #165788;
+  background: #fcfcfc;
+  position: static;
 }
 /* end of Nav Styles */
 

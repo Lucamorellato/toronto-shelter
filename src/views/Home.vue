@@ -2,13 +2,14 @@
   <div class="home">
     <section class="hero-content">
       <h1>Toronto Shelter Occupancy</h1>
-      <h2>{{this.months[`${new Date().getMonth()}`]}} {{new Date().getDate() - 1}} Statistics:</h2>
-      <p>{{this.occupiedBeds}} / {{this.totalBeds}}</p>
+      <h2>{{this.months[`${new Date().getMonth()}`]}} {{new Date().getDate() - 1}} Shelter Capacity:</h2>
       <Graph :occupiedPercentage='occupiedPercentage' :sector='sector' :capacityColor='capacityColor' />
+      <p class="numbers">{{this.occupiedBeds}} / {{this.totalBeds}} Beds</p>
     </section>
-    <section class="sectors">
-      <div v-for='(sector, i) in typesOfShelters' :key='i'>
-        <Sector :sector='sector' :i='i' :sheltersOrganized='sheltersOrganized[i]' :handleClick='handleClick' />
+    <section class="sect">
+      <h3>Sectors</h3>
+      <div class="sectors">
+        <Sector v-for='(sector, i) in typesOfShelters' :key='i' :sector='sector' :i='i' :sheltersOrganized='sheltersOrganized[i]' :handleClick='handleClick' />
       </div>
     </section>
     <section class="shelters">
@@ -94,8 +95,19 @@ export default {
       let result = ((this.occupiedBeds / this.totalBeds)*100).toFixed(1)
       return `${result}%`
     },
+    capacityColor(){
+      let capacity = parseInt(this.occupiedPercentage)
+      if (capacity >= 98) {
+        return 'red'
+      } else if (capacity >= 95) {
+          return 'orange'
+      } else if (capacity >= 85) {
+          return 'yellow'
+      } else {
+          return 'normal'
+      }
+    }
   },
-
   methods: {
     handleClick(e){
       e === this.show[0] ? (this.show.pop(), this.show.push(null)) : (this.show.pop(), this.show.push(e));
@@ -105,7 +117,6 @@ export default {
 </script>
 
 <style scoped>
-
 .home {
   max-width: 1280px;
   margin: 0 auto;
@@ -113,6 +124,16 @@ export default {
 
 .hero-content {
   text-align: center;
+  color: #165788;
+  displaY: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.hero-content .numbers {
+  font-size: 20px;
+  font-weight: bold;
 }
 
 .sectors {
