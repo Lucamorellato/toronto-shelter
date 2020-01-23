@@ -2,8 +2,8 @@
     <div>
         <transition name="accordion" v-on:before-enter="beforeEnter" v-on:enter="enter"
         v-on:before-leave="beforeLeave" v-on:leave="leave">
-            <ul v-show="show[0] == i" class="accordion-content">
-                <div v-for='(shelter, y) in  sheltersOrganized' :key='y' >
+            <ul class="accordion-content">
+                <div v-for='(shelter, y) in  sheltersOrganized[i]' :key='y' >
                     <Card :shelter="shelter" />
                 </div>
             </ul>
@@ -22,7 +22,6 @@ export default {
         i: Number,
         sector: String,
         sheltersOrganized: Array,
-        show: Array,
     },
     computed: {
         totalBeds() {

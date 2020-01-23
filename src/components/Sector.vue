@@ -1,10 +1,10 @@
 <template>
 <!-- <div class="card-container"> -->
-    <router-link exact :to="`/list?i=${i}`" class="sector-card">
+    <router-link exact to="/list" class="sector-card">
         <h4>{{sector.toUpperCase()}}</h4>
         <p>{{occupiedBeds}} of {{totalBeds}} beds</p>
         <Graph :occupiedPercentage='occupiedPercentage' :sector='sector' :capacityColor='capacityColor' />
-        <p class="link" @click='() => handleClick(i)'>View availability ></p>
+        <p class="link">View availability ></p>
     </router-link>
 <!-- </div> -->
 </template>
@@ -17,7 +17,6 @@ export default {
         sector: String,
         i: Number,
         sheltersOrganized: Array,
-        handleClick: Function,
     },
     components: {
         Graph,
@@ -120,10 +119,10 @@ p {
         min-height: 425px;
     }
 }
-@media (max-width: 625px) {
+/* @media (max-width: 625px) {
+    
 
-
-}
+} */
 @media (max-width: 450px) {
    .sector-card {
        width: 100%;

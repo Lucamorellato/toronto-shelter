@@ -2,7 +2,7 @@
     <li class="card" :style="`background: ${capacityColor}`">
         {{shelter.SHELTER_NAME}}
         {{shelter.PROGRAM_NAME}}
-        {{shelter.OCCUPANCY}} /  {{shelter.CAPACITY}}
+        {{shelter.OCCUPANCY}} of {{shelter.CAPACITY}} Beds
         <a :href="`https://maps.google.com/?q=${shelter.SHELTER_ADDRESS}, ${shelter.SHELTER_CITY}, ${shelter.SHELTER_POSTAL_CODE}`" target="_blank">Open in Maps <img class="map-marker" :src="require(`@/assets/map-marker.png`)" alt=""></a> 
     </li>
 </template>

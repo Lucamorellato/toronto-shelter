@@ -5,30 +5,32 @@
       <h2>{{this.months[`${new Date().getMonth()}`]}} {{new Date().getDate() - 1}}</h2>
     </section>
     <section class="sectors">
-        <Sector sector='Total' :i='10' :sheltersOrganized='this.currentData' :handleClick='handleClick' />
-        <Sector v-for='(sector, i) in typesOfShelters' :key='i' :sector='sector' :i='i' :sheltersOrganized='sheltersOrganized[i]' :handleClick='handleClick' />
+        <Sector sector='All' :i='typesOfShelters.length' :sheltersOrganized='this.currentData' @click="handleClick" />
+        <Sector v-for='(sector, i) in typesOfShelters' :key='i' :sector='sector' :i='i' :sheltersOrganized='sheltersOrganized[i]' @click="handleClick" />
     </section>
-    <section class="shelters">
+    <!-- <section class="shelters">
       <div v-for='(sector, i) in typesOfShelters' :key='i'>
          <SectorList :sector='sector' :i='i' :show='show' :sheltersOrganized='sheltersOrganized[i]' />
       </div>
-    </section>
+    </section> -->
   </div>
 </template>
 
 <script>
 import Sector from '../components/Sector.vue'
-import SectorList from '../components/SectorList.vue'
 
 export default {
   name: 'home',
   components: {
     Sector,
-    SectorList,
   },
   props: {
     info: Array,
     typesOfShelters: Array,
+    currentData: Array,
+    mostRecentOccupancyDate: Date,
+    sheltersOrganized: Array,
+    handleClick: Function,
   },
 
   data() {
@@ -52,28 +54,6 @@ export default {
   },
 
   computed: {
-    mostRecentOccupancyDate(){
-      return new Date(Math.max.apply(null, this.info.map(function(e) {
-        return new Date(e.OCCUPANCY_DATE);
-      })));
-    },
-
-    // THIS IS THE CORRECT WAY TO FILTER BY OCCUPANCY_DATE which is not currently being updated by the API
-    currentData(){
-      const startDate = this.mostRecentOccupancyDate
-      const endDate = new Date()
-      const currentData = this.info.filter(function (shelter) {
-        const date = new Date(shelter.OCCUPANCY_DATE);
-          return (date >= startDate && date <= endDate);
-        });
-      return currentData
-    },
-
-    sheltersOrganized(){
-      return this.typesOfShelters.map(i => {
-        return this.currentData.filter(s => s.SECTOR == i)
-      })
-    },
 
     totalBeds() {
       return this.currentData.reduce((acc, currentValue) => {
@@ -103,9 +83,7 @@ export default {
     }
   },
   methods: {
-    handleClick(e){
-      e === this.show[0] ? (this.show.pop(), this.show.push(null)) : (this.show.pop(), this.show.push(e));
-    }
+   
   },
 }
 </script>

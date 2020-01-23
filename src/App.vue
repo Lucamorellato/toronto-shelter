@@ -17,7 +17,7 @@
         name="fade"
         mode="out-in"
       >
-      <router-view v-if="!loading" :info="info" :typesOfShelters="typesOfShelters"/>
+      <router-view v-if="!loading" :info="info" :typesOfShelters="typesOfShelters" :mostRecentOccupancyDate="mostRecentOccupancyDate" :currentData="currentData" :sheltersOrganized="sheltersOrganized" :handleClick="handleClick" />
     </transition>
     <transition
         name="fade"
@@ -56,6 +56,35 @@ export default {
       })
       .finally(() => this.loading = false)
   },
+  computed: {
+    mostRecentOccupancyDate(){
+      return new Date(Math.max.apply(null, this.info.map(function(e) {
+        return new Date(e.OCCUPANCY_DATE);
+      })));
+    },
+
+    // THIS IS THE CORRECT WAY TO FILTER BY OCCUPANCY_DATE which is not currently being updated by the API
+    currentData(){
+      const startDate = this.mostRecentOccupancyDate
+      const endDate = new Date()
+      const currentData = this.info.filter(function (shelter) {
+        const date = new Date(shelter.OCCUPANCY_DATE);
+          return (date >= startDate && date <= endDate);
+        });
+      return currentData
+    },
+
+    sheltersOrganized(){
+      return this.typesOfShelters.map(i => {
+        return this.currentData.filter(s => s.SECTOR == i)
+      })
+    },
+  },
+  methods: {
+    handleClick(){
+      console.log('fuc')
+    }
+  }
 }
 </script>
 
