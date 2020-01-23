@@ -20,7 +20,7 @@ body {
 
 .wrapper {
   max-width: 1350px;
-  width: 85%;
+  width: 75%;
   margin: 0 auto;
   position: relative;
 }
@@ -89,7 +89,7 @@ ul,li{list-style: none;margin: 0;padding: 0;}
 /* end of page fade transitions */
 
 /* media */
-@media (max-width: 680px) {
+@media (max-width: 728px) {
   html {
     background-position: right;
   }

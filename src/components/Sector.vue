@@ -69,9 +69,9 @@ export default {
     box-shadow: 0 3px 7px rgba(62, 0, 237,0.15), 0 3px 8px rgba(62, 0, 237,0.18);
     transition: box-shadow 0.15s cubic-bezier(.4,.4,.25,1);
     padding: 10px 20px;
-    min-height: 450px;
+    min-height: 475px;
     width: calc(33% - 2rem); 
-    max-width: 350px;
+    /* max-width: 350px; */
     border-radius: 2px;
     margin: 2rem 1rem;
 }
@@ -91,7 +91,7 @@ p {
 
 .link {
     width: 60%;
-    font-size: 1.8rem;
+    font-size: 1.6rem;
     padding-top: 1.5rem;
     text-align: center;
     margin: 0 auto;
@@ -108,17 +108,23 @@ p {
 @media (max-width: 1128px) {
     .sector-card {
         width: 100%;
+        min-height: 450px;
     }
 }
 
-@media (max-width: 680px) {
+@media (max-width: 728px) {
     .sector-card {
         margin: 0;
         min-width: 280px;
+        width: 85%;
+        min-height: 425px;
     }
-    
 }
-@media (max-width: 400px) {
+@media (max-width: 625px) {
+
+
+}
+@media (max-width: 450px) {
    .sector-card {
        width: 100%;
    }

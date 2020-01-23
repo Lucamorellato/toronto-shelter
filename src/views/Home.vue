@@ -129,11 +129,19 @@ export default {
     justify-items: center;
   }
 }
-@media (max-width: 680px) {
+@media (max-width: 728px) {
   .sectors {
-    grid-template-columns: 1fr;
+    /* grid-template-columns: 1fr; */
     grid-gap: 5rem 0;
   }
 }
+
+@media (max-width: 615px) {
+  .sectors {
+    grid-template-columns: 1fr;
+    /* grid-gap: 5rem 0; */
+  }
+}
+
 
 </style>
