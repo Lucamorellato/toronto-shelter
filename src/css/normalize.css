@@ -10,6 +10,7 @@ html {
     background: url('~@/assets/blobs.svg');
     background-size: cover;
     background-attachment: fixed;
+    background-position: left;
 }
 
 body {
@@ -78,7 +79,7 @@ ul,li{list-style: none;margin: 0;padding: 0;}
 /* page fade transitions */
 .fade-enter-active,
 .fade-leave-active {
-  transition: 100ms cubic-bezier(.4,.4,.25,1);
+  transition: opacity 300ms cubic-bezier(.4,.4,.25,1);
 }
 
 .fade-enter,
@@ -94,7 +95,7 @@ ul,li{list-style: none;margin: 0;padding: 0;}
   }
   .wrapper {
     width: 100%;
-    margin: 0 20px;
+    padding: 0 15px;
   }
   h1 {
     font-size: 3.2rem;

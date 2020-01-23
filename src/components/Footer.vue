@@ -1,6 +1,6 @@
 <template>
     <footer>
-        <p>©{{new Date().getFullYear()}} <a href="https://www.lucamorellato.com">Luca Morellato ^</a></p>
+        <p>©{{new Date().getFullYear()}} <a href="https://www.lucamorellato.com">Luca Morellato</a></p>
     </footer>
 </template>
 

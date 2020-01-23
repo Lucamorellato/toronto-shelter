@@ -113,7 +113,8 @@ export default {
 <style scoped>
 
 .sectors {
-  padding: 8rem 0 10rem 0;
+  width: 100%;
+  padding: 8rem 0 12rem 0;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
@@ -131,7 +132,7 @@ export default {
 @media (max-width: 680px) {
   .sectors {
     grid-template-columns: 1fr;
-    grid-gap: 3rem;
+    grid-gap: 5rem 0;
   }
 }
 

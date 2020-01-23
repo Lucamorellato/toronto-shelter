@@ -13,7 +13,6 @@ export default {
     },
     beforeRouteEnter (to, from, next) {
         next(vm => {
-            console.log(to.query.i)
             vm.id = to.query.i
             // access to component instance via `vm`
         })

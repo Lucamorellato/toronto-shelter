@@ -39,6 +39,7 @@ export default {
   margin: 10px auto;
   max-width: 80%;
   max-height: 250px;
+  min-width: 225px;
 }
 
 .circle-bg {

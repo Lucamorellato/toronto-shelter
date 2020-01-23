@@ -1,10 +1,12 @@
 <template>
+<!-- <div class="card-container"> -->
     <router-link exact :to="`/list?i=${i}`" class="sector-card">
         <h4>{{sector.toUpperCase()}}</h4>
         <p>{{occupiedBeds}} of {{totalBeds}} beds</p>
         <Graph :occupiedPercentage='occupiedPercentage' :sector='sector' :capacityColor='capacityColor' />
         <p class="link" @click='() => handleClick(i)'>View availability ></p>
     </router-link>
+<!-- </div> -->
 </template>
 
 <script>
@@ -53,19 +55,25 @@ export default {
 
 <style scoped>
 
+.card-container {
+    width: calc(33% - 2rem); 
+}
+
 .sector-card {
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
     color: #3e00ed;
     background: white;
     text-decoration: none;
-    box-shadow: 0 2px 6px rgba(62, 0, 237,0.25), 0 2px 6px rgba(62, 0, 237,0.3);
+    box-shadow: 0 3px 7px rgba(62, 0, 237,0.15), 0 3px 8px rgba(62, 0, 237,0.18);
     transition: box-shadow 0.15s cubic-bezier(.4,.4,.25,1);
     padding: 10px 20px;
-    min-height: 400px;
-    width:300px;
+    min-height: 450px;
+    width: calc(33% - 2rem); 
+    max-width: 350px;
     border-radius: 2px;
-    margin: 2rem 0;
+    margin: 2rem 1rem;
 }
 
 h4, p {
@@ -94,20 +102,25 @@ p {
     box-shadow: 0 5px 8px rgba(62, 0, 237,0.25), 1px 2px 8px rgba(62, 0, 237,0.3);
 }
 .sector-card:hover .link {
-    border-bottom: 3px solid #3e00ed;
+    border-bottom: 3px solid rgba(62, 0, 237,0.8);
 }
 
+@media (max-width: 1128px) {
+    .sector-card {
+        width: 100%;
+    }
+}
 
 @media (max-width: 680px) {
     .sector-card {
         margin: 0;
+        min-width: 280px;
     }
     
 }
 @media (max-width: 400px) {
    .sector-card {
        width: 100%;
-       min-height: 375px;
    }
    .link {
        width: 70%;
