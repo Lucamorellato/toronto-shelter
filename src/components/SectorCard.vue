@@ -1,12 +1,10 @@
 <template>
-<!-- <div class="card-container"> -->
-    <router-link exact to="/list" class="sector-card">
+    <router-link exact :to="`/list?i=${i}`" class="sector-card">
         <h4>{{sector.toUpperCase()}}</h4>
         <p>{{occupiedBeds}} of {{totalBeds}} beds</p>
         <Graph :occupiedPercentage='occupiedPercentage' :sector='sector' :capacityColor='capacityColor' />
         <p class="link">View availability ></p>
     </router-link>
-<!-- </div> -->
 </template>
 
 <script>

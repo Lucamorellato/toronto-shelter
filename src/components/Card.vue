@@ -1,9 +1,13 @@
 <template>
-    <li class="card" :style="`background: ${capacityColor}`">
-        {{shelter.SHELTER_NAME}}
-        {{shelter.PROGRAM_NAME}}
-        {{shelter.OCCUPANCY}} of {{shelter.CAPACITY}} Beds
-        <a :href="`https://maps.google.com/?q=${shelter.SHELTER_ADDRESS}, ${shelter.SHELTER_CITY}, ${shelter.SHELTER_POSTAL_CODE}`" target="_blank">Open in Maps <img class="map-marker" :src="require(`@/assets/map-marker.png`)" alt=""></a> 
+    <li class="card">
+        <div class="card-content">
+            <p class="name">{{shelter.SHELTER_NAME}}</p>
+            <p>{{shelter.PROGRAM_NAME}}</p>
+            <p>{{shelter.SECTOR}} - {{shelter.SHELTER_ADDRESS}}</p>
+            <p class="beds" :class="capacityColor">{{shelter.OCCUPANCY}} of {{shelter.CAPACITY}} Beds <br/><span v-if="capacityColor === !red">At Capacity</span></p>
+            <a :href="`https://maps.google.com/?q=${shelter.SHELTER_ADDRESS}, ${shelter.SHELTER_CITY}, ${shelter.SHELTER_POSTAL_CODE}`" target="_blank">Open in Maps <img class="map-marker" :src="require(`@/assets/map-marker.png`)" alt=""></a> 
+        </div>
+        <span class="divider"></span>
     </li>
 </template>
 
@@ -20,14 +24,14 @@ computed: {
     },
     capacityColor(){
         let capacity = parseInt(this.occupiedPercentage)
-        if (capacity > 99) {
+        if (capacity >= 98) {
             return 'red'
-        } else if (capacity >= 95) {
+        } else if (capacity >= 97) {
             return 'orange'
-        } else if (capacity >= 80) {
+        } else if (capacity >= 85) {
             return 'yellow'
         } else {
-            return '#613144'
+            return 'normal'
         }
     }
 },
@@ -41,16 +45,50 @@ methods: {
 
 .card {
     margin-bottom: 40px;
-    width: 70%;
     border-radius: 3px;
-    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
-    padding: 15px;
     font-size: 18px;
+    margin: 0 auto;
+    position: relative;
+}
+.card-content {
+    padding:4rem;
+}
+.card-content p.name {
+    font-weight: 900;
+    font-size: 1.8rem;
+    margin: 1.6rem 0;
+}
+.card-content p {
+    margin: 0;
+}
+
+.beds {
+    position: absolute;
+    top: 5.6rem;
+    right: 4rem;
+}
+.beds.red {
+    color:  rgb(245, 70, 20);
+}
+.beds.orange {
+    color: rgb(245, 146, 25);
+}
+.beds.yellow {
+    color: rgb(250, 230, 0);
+}
+
+.divider {
+    display: block;
+    height: 5px;
+    width: 75%;
+    background:#fff0df;
+    margin: 0 auto;
 }
 
 .map-marker {
     width: 20px;
     height: 20px;
+    margin-top:5px;
 }
 
 </style>

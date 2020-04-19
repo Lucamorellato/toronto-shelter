@@ -1,9 +1,12 @@
 <template>
-    <div>
+    <div v-show="show == i">
+        <transition name="fade">
+            <p class="top" v-show="show == i"><span class="big">{{sheltersOrganized.length + 1}}</span> shelters in "{{sector.toUpperCase()}}"</p>
+        </transition>
         <transition name="accordion" v-on:before-enter="beforeEnter" v-on:enter="enter"
         v-on:before-leave="beforeLeave" v-on:leave="leave">
-            <ul class="accordion-content">
-                <div v-for='(shelter, y) in  sheltersOrganized[i]' :key='y' >
+            <ul  v-show="show == i" class="accordion-content">
+                <div v-for='(shelter, y) in sheltersOrganized' :key='y' >
                     <Card :shelter="shelter" />
                 </div>
             </ul>
@@ -20,6 +23,7 @@ export default {
     },
     props: {
         i: Number,
+        show: Number,
         sector: String,
         sheltersOrganized: Array,
     },
@@ -57,22 +61,39 @@ export default {
         leave: function(el) {
             el.style.height = '0';
             el.style.opacity = '0';
-            this.increaseDocumentSize()
         }
     }
 }
 </script>
 
-<style>
+<style scoped>
+
+.top {
+    font-size: 2rem;
+    margin: 3rem 0;
+}
+
+.big {
+    font-size: 3rem;
+    font-weight: 900;
+}
+
 
 .accordion-content{
-    transition: 500ms cubic-bezier(.4,.4,.25,1);
+    transition: 750ms cubic-bezier(.4,.4,.25,1);
     overflow: hidden;
     width: 100%;
+    background: white;
 }
 
 .accordion-content>*{
     width: 100%;
+}
+
+@media (max-width: 728px) {
+    .accordion-content {
+        background: rgba(255, 255, 255, 0.719);
+    }
 }
 
 </style>

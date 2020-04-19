@@ -5,24 +5,19 @@
       <h2>{{this.months[`${new Date().getMonth()}`]}} {{new Date().getDate() - 1}}</h2>
     </section>
     <section class="sectors">
-        <Sector sector='All' :i='typesOfShelters.length' :sheltersOrganized='this.currentData' @click="handleClick" />
-        <Sector v-for='(sector, i) in typesOfShelters' :key='i' :sector='sector' :i='i' :sheltersOrganized='sheltersOrganized[i]' @click="handleClick" />
+        <SectorCard sector='All' :i='typesOfShelters.length' :sheltersOrganized='this.currentData' @click="handleClick" />
+        <SectorCard v-for='(sector, i) in typesOfShelters' :key='i' :sector='sector' :i='i' :sheltersOrganized='sheltersOrganized[i]' @click="handleClick" />
     </section>
-    <!-- <section class="shelters">
-      <div v-for='(sector, i) in typesOfShelters' :key='i'>
-         <SectorList :sector='sector' :i='i' :show='show' :sheltersOrganized='sheltersOrganized[i]' />
-      </div>
-    </section> -->
   </div>
 </template>
 
 <script>
-import Sector from '../components/Sector.vue'
+import SectorCard from '../components/SectorCard.vue'
 
 export default {
   name: 'home',
   components: {
-    Sector,
+    SectorCard,
   },
   props: {
     info: Array,
@@ -54,7 +49,6 @@ export default {
   },
 
   computed: {
-
     totalBeds() {
       return this.currentData.reduce((acc, currentValue) => {
         return acc + currentValue.CAPACITY

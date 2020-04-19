@@ -1,9 +1,10 @@
 <template>
-  <div class="wrapper">
+   <div class="wrapper">
       <h1>List</h1> 
-      <button v-for="(type, i) in typesOfShelters2" :key="i">{{type}}</button>
-      {{id}}
-      <SectorList :i="parseInt(id)" :sheltersOrganized="sheltersOrganized" />
+      <button v-for="(type, i) in typesOfShelters2" :key="i" :class="show == i ? 'active' : null" @click="handleChange(i)">{{type}}</button>
+      <div v-for='(sector, index, name) in typesOfShelters2' :key='name'>
+         <SectorList key="index" :i='index' :show='parseInt(show)' :sheltersOrganized='index === typesOfShelters2.length - 1 ? currentData : sheltersOrganized[index]' :sector='sector' />
+      </div>
   </div>
 </template>
 
@@ -20,28 +21,31 @@ export default {
     components: {
         SectorList,
     },
-    
+    data(){
+        return {
+            show: null,
+            typesOfShelters2: [],
+        }
+    },
     beforeRouteEnter (to, from, next) {
         next(vm => {
-            console.log(to.query, vm.id, from, 'from')
-        //     if (!to.query.i) {
-        //         let id = vm.typesOfShelters.length - 1
-        //         vm.id = id
-        //         // access to component instance via `vm`
-        //    } else { 
-        //        let id = to.query.i
-        //        vm.id = id
-        //    }
+            if (!to.query.i) {
+                let id = vm.typesOfShelters.length - 1
+                vm.show = id
+                // access to component instance via `vm`
+           } else { 
+               let id = parseInt(to.query.i)
+               vm.show = id
+           }
         })
     },
     mounted(){
-        this.typesOfShelters2 = [...this.typesOfShelters, 'All'].reverse()
+        this.typesOfShelters2 = [...this.typesOfShelters, 'All']
     },
-
-    data(){
-        return {
-            id: null,
-            typesOfShelters2: [],
+    methods: {
+        handleChange(e){
+            this.show = e
+            this.$router.push(`?i=${e}`)
         }
     }
 
@@ -49,6 +53,10 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+
+button.active {
+   background: red;
+}
 
 </style>
