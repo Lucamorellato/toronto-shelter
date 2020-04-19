@@ -114,7 +114,7 @@ export default {
 }
 
 
-#nav a.router-link-exact-active {
+#nav a.router-link-active {
   border-bottom: 3px solid rgb(23, 23, 23);
   transition: border 200ms cubic-bezier(.4,.4,.25,1)
 }

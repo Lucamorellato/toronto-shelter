@@ -27,7 +27,6 @@ export default {
     sheltersOrganized: Array,
     handleClick: Function,
   },
-
   data() {
     return {
       months: [
@@ -75,9 +74,6 @@ export default {
           return 'normal'
       }
     }
-  },
-  methods: {
-   
   },
 }
 </script>
