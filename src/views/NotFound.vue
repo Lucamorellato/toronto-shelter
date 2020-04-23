@@ -7,7 +7,10 @@
 
 <script>
 export default {
-
+    name: 'notfound',
+    mounted(){
+        console.log("FUCK")
+    }
 }
 </script>
 

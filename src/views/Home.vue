@@ -2,11 +2,11 @@
   <div class="home wrapper">
     <section class="hero-content">
       <h1>Shelter <br/>Occupancy TO</h1>
-      <h2>{{this.months[`${new Date().getMonth()}`]}} {{new Date().getDate() - 1}}</h2>
+      <h2>Last Updated: {{this.months[`${this.mostRecentOccupancyDate.getMonth()}`]}} {{this.mostRecentOccupancyDate.getDate()}}</h2>
     </section>
     <section class="sectors">
-        <SectorCard sector='All' :i='typesOfShelters.length' :sheltersOrganized='this.currentData' @click="handleClick" />
-        <SectorCard v-for='(sector, i) in typesOfShelters' :key='i' :sector='sector' :i='i' :sheltersOrganized='sheltersOrganized[i]' @click="handleClick" />
+        <SectorCard sector='All' :i='typesOfShelters.length' :sheltersOrganized='this.currentData'  />
+        <SectorCard v-for='(sector, i) in typesOfShelters' :key='i' :sector='sector' :i='i' :sheltersOrganized='sheltersOrganized[i]'  />
     </section>
   </div>
 </template>
@@ -25,7 +25,6 @@ export default {
     currentData: Array,
     mostRecentOccupancyDate: Date,
     sheltersOrganized: Array,
-    handleClick: Function,
   },
   data() {
     return {

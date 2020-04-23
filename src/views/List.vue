@@ -30,9 +30,8 @@ export default {
     beforeRouteEnter (to, from, next) {
         next(vm => {
             if (!to.query.i) {
-                let id = vm.typesOfShelters.length - 1
-                vm.show = id
-                // access to component instance via `vm`
+                // this sets id to the length of the Array, which is equal to the last index or 'ALL'
+                vm.show = vm.typesOfShelters.length
            } else { 
                let id = parseInt(to.query.i)
                vm.show = id
@@ -47,9 +46,7 @@ export default {
             this.show = e
             this.$router.push(`?i=${e}`)
         }
-    }
-
-    
+    },
 }
 </script>
 

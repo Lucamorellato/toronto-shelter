@@ -4,7 +4,7 @@
             <p class="name">{{shelter.SHELTER_NAME}}</p>
             <p>{{shelter.PROGRAM_NAME}}</p>
             <p>{{shelter.SECTOR}} - {{shelter.SHELTER_ADDRESS}}</p>
-            <p class="beds" :class="capacityColor">{{shelter.OCCUPANCY}} of {{shelter.CAPACITY}} Beds <br/><span v-if="capacityColor === !red">At Capacity</span></p>
+            <p class="beds" :class="capacityColor">{{shelter.OCCUPANCY}} of {{shelter.CAPACITY}} Beds <br/><span v-if="capacityColor !== 'red'">At Capacity</span></p>
             <a :href="`https://maps.google.com/?q=${shelter.SHELTER_ADDRESS}, ${shelter.SHELTER_CITY}, ${shelter.SHELTER_POSTAL_CODE}`" target="_blank">Open in Maps <img class="map-marker" :src="require(`@/assets/map-marker.png`)" alt=""></a> 
         </div>
         <span class="divider"></span>
