@@ -17,7 +17,6 @@ export default {
     props: {
         typesOfShelters: Array,
         currentData: Array,
-        mostRecentOccupancyDate: Date,
         sheltersOrganized: Array,
     },
     components: {

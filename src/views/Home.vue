@@ -2,7 +2,7 @@
   <div class="home">
     <section class="hero-content">
       <h1>Shelter <br/>Occupancy TO</h1>
-      <h2 class="date">Last Updated: {{this.months[`${this.mostRecentOccupancyDate.getMonth()}`]}} {{this.mostRecentOccupancyDate.getDate()}}</h2>
+      <h2 class="date">Reported: {{this.months[`${this.mostRecentDate.getMonth()}`]}} {{this.mostRecentDate.getDate()}}</h2>
     </section>
     <section class="sectors">
         <SectorCard sector='All' :i='typesOfShelters.length' :sheltersOrganized='this.currentData'  />
@@ -20,10 +20,9 @@ export default {
     SectorCard,
   },
   props: {
-    info: Array,
     typesOfShelters: Array,
     currentData: Array,
-    mostRecentOccupancyDate: Date,
+    mostRecentDate: Date,
     sheltersOrganized: Array,
   },
   data() {

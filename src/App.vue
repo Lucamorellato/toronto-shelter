@@ -6,7 +6,7 @@
           mode="out-in"
         >
       <div v-if="!loading" id="nav-container" class="wrapper">
-        <nav class="nav-buttons">
+        <nav class="nav-buttons" v-if="!currentPage.includes('error')">
           <router-link exact to="/">Home</router-link> |
           <router-link exact to="/list" :class="currentPage.includes('list') ? 'active' : null">List</router-link> |
           <router-link exact to="/about">About</router-link> 
@@ -18,7 +18,7 @@
         name="fade"
         mode="out-in"
       >
-        <router-view class="wrapper" v-if="!loading" :info="info" :typesOfShelters="typesOfShelters" :mostRecentOccupancyDate="mostRecentOccupancyDate" :currentData="info" :sheltersOrganized="sheltersOrganized" />
+        <router-view class="wrapper" v-if="!loading"   :typesOfShelters="typesOfShelters" :mostRecentDate="mostRecentDate" :currentData="currentData" :sheltersOrganized="sheltersOrganized" />
       </transition>
     </div>
     <transition
@@ -43,30 +43,28 @@ export default {
       info: null,
       loading: true,
       typesOfShelters: [],
+      mostRecentDate: '',
     }
   },
   mounted() {
-    axios.get('https://secure.toronto.ca/c3api_data/v2/DataAccess.svc/ssha/extractssha?$format=application/json;odata.metadata=none&$top=300&$orderby=OCCUPANCY_DATE desc')
+    axios.get('https://secure.toronto.ca/c3api_data/v2/DataAccess.svc/ssha/extractssha?$format=application/json;odata.metadata=none&$top=160&$orderby=OCCUPANCY_DATE desc')
       .then(response => {
         this.info = response.data.value
         this.typesOfShelters = [...new Set(response.data.value.map(s => s.SECTOR))]
-        this.loading = false
+        this.mostRecentDate = this.getMostRecentDate(this.info[0].OCCUPANCY_DATE)
       })
        .catch(error => {
         this.error = error.message
-        this.$router.push('/notfound')
+        this.info = []
+        this.$router.push('/error')
       })
       .finally(() => this.loading = false)
   },
   computed: {
-    mostRecentOccupancyDate(){
-      let rawDate = this.info[0].OCCUPANCY_DATE
-      let year = parseInt(rawDate.slice(0,4))
-      // -1 to date because January is 0 not 1
-      let month = parseInt(rawDate.slice(5, 7) - 1)
-      let day = parseInt(rawDate.slice(8, 10))
-
-      return new Date(year, month, day)
+    currentData(){
+      let startDate = this.info[0].OCCUPANCY_DATE
+      
+      return this.info.filter(s => s.OCCUPANCY_DATE === startDate )
     },
     sheltersOrganized(){
       return this.typesOfShelters.map(i => {
@@ -77,14 +75,20 @@ export default {
         return this.$route.path;
     },
   },
+  methods: {
+    getMostRecentDate(date){
+      let year = parseInt(date.slice(0,4))
+      // -1 to date because January is 0 not 1
+      let month = parseInt(date.slice(5, 7) - 1)
+      let day = parseInt(date.slice(8, 10))
+
+      return new Date(year, month, day)
+    }
+  }
 }
 </script>
 
 <style scoped>
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700;900&display=swap');
-#app {
-  font-family: 'Roboto', sans-serif;
-}
 
 /* Nav Styles */
 #nav-container {
@@ -106,7 +110,6 @@ export default {
 }
 
 #nav-container a:hover{
-  
   border-bottom: 3px solid rgba(39, 68, 144, 0.54);
   transition: border 200ms cubic-bezier(.4,.4,.25,1)
 }

@@ -4,6 +4,7 @@
 .visuallyhidden:not(:focus):not(:active) { position: absolute; width: 1px; height: 1px; margin: -1px;border: 0;padding: 0;white-space: nowrap;clip-path: inset(100%);clip: rect(00 0 0);overflow: hidden;}
 
 * { -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box; }
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700;900&display=swap');
 
 html {
     font-size: 62.5%;
@@ -12,6 +13,7 @@ html {
     background-attachment: fixed;
     background-position: left;
 }
+
 
 body {
     font-size: 1.8rem;
@@ -31,6 +33,7 @@ body {
   color: #274490;
   position: relative;
   overflow-x: hidden;
+  font-family: 'Roboto', sans-serif;
 }
 
 .content {

@@ -98,7 +98,9 @@ methods: {
 }
 
 @media (max-width: 615px) {
-
+    .card-content {
+        padding:2rem;
+    }   
     .card p {
         font-size: 1.6rem;
     }
