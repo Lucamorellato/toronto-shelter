@@ -1,7 +1,9 @@
 <template>
     <router-link exact :to="`/list?i=${i}`" class="sector-card">
-        <h4>{{sector.toUpperCase()}}</h4>
-        <p>{{occupiedBeds}} of {{totalBeds}} beds</p>
+        <div class="text">
+            <h3>{{sector}}</h3>
+            <p>{{occupiedBeds}} of {{totalBeds}} beds</p>
+        </div>
         <Graph :occupiedPercentage='occupiedPercentage' :sector='sector' :capacityColor='capacityColor' />
         <p class="link">View availability ></p>
     </router-link>
@@ -60,26 +62,27 @@ export default {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    color: #3e00ed;
+    color: #274490;
     background: white;
     text-decoration: none;
-    box-shadow: 0 3px 7px rgba(62, 0, 237,0.15), 0 3px 8px rgba(62, 0, 237,0.18);
+    box-shadow: 0 3px 7px rgba(39, 68, 144,0.15), 0 3px 8px rgba(39, 68, 144,0.18);
     transition: box-shadow 0.15s cubic-bezier(.4,.4,.25,1);
-    padding: 10px 20px;
+    padding: 1rem 2rem;
+    margin-bottom: 4rem;
     min-height: 475px;
+
     width: calc(33% - 2rem); 
-    /* max-width: 350px; */
     border-radius: 2px;
-    margin: 2rem 1rem;
 }
 
-h4, p {
+h3, p {
     margin: 0;
 }
 
-h4 {
+h3 {
     font-size: 2.6rem;
     font-weight: bold;
+    text-transform: uppercase;
 }
 
 p {
@@ -87,7 +90,7 @@ p {
 }
 
 .link {
-    width: 60%;
+    width: 55%;
     font-size: 1.6rem;
     padding-top: 1.5rem;
     text-align: center;
@@ -96,10 +99,10 @@ p {
     transition: border 0.25s cubic-bezier(.4,.4,.25,1);
 }
 .sector-card:hover {
-    box-shadow: 0 5px 8px rgba(62, 0, 237,0.25), 1px 2px 8px rgba(62, 0, 237,0.3);
+    box-shadow: 0 5px 8px rgba(39, 68, 144,0.25), 1px 2px 8px rgba(39, 68, 144,0.3);
 }
 .sector-card:hover .link {
-    border-bottom: 3px solid rgba(62, 0, 237,0.8);
+    border-bottom: 3px solid rgba(39, 68, 144, 0.8);
 }
 
 @media (max-width: 1128px) {
@@ -113,7 +116,7 @@ p {
     .sector-card {
         margin: 0;
         min-width: 280px;
-        width: 85%;
+        width: 75%;
         min-height: 425px;
     }
 }
@@ -121,7 +124,7 @@ p {
     
 
 } */
-@media (max-width: 450px) {
+@media (max-width: 615px) {
    .sector-card {
        width: 100%;
    }

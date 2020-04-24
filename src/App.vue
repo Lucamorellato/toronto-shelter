@@ -1,26 +1,26 @@
 <template>
   <div id="app">
-    <transition
+    <div class="content">
+      <transition
+          name="fade"
+          mode="out-in"
+        >
+      <div v-if="!loading" id="nav-container" class="wrapper">
+        <nav class="nav-buttons">
+          <router-link exact to="/">Home</router-link> |
+          <router-link exact to="/list" :class="currentPage.includes('list') ? 'active' : null">List</router-link> |
+          <router-link exact to="/about">About</router-link> 
+        </nav>
+      </div>
+      </transition>
+      <div class="loader" v-if="loading"></div>
+      <transition
         name="fade"
         mode="out-in"
       >
-    <div v-if="!loading" id="nav" class="wrapper">
-      <nav class="nav-buttons">
-        <router-link exact to="/">Home</router-link> |
-        <router-link exact to="/list" :class="currentPage.includes('list') ? 'active' : null">List</router-link> |
-        <router-link exact to="/about">About</router-link> 
-      </nav>
+        <router-view class="wrapper" v-if="!loading" :info="info" :typesOfShelters="typesOfShelters" :mostRecentOccupancyDate="mostRecentOccupancyDate" :currentData="info" :sheltersOrganized="sheltersOrganized" />
+      </transition>
     </div>
-    </transition>
-    <div class="loader" v-if="loading"></div>
-
-    {{this.error}}
-    <transition
-      name="fade"
-      mode="out-in"
-    >
-      <router-view v-if="!loading" :info="info" :typesOfShelters="typesOfShelters" :mostRecentOccupancyDate="mostRecentOccupancyDate" :currentData="info" :sheltersOrganized="sheltersOrganized" />
-    </transition>
     <transition
       name="fade"
       mode="out-in"
@@ -48,20 +48,15 @@ export default {
   mounted() {
     axios.get('https://secure.toronto.ca/c3api_data/v2/DataAccess.svc/ssha/extractssha?$format=application/json;odata.metadata=none&$top=300&$orderby=OCCUPANCY_DATE desc')
       .then(response => {
-        console.log('what')
         this.info = response.data.value
         this.typesOfShelters = [...new Set(response.data.value.map(s => s.SECTOR))]
         this.loading = false
       })
        .catch(error => {
         this.error = error.message
-        console.log(error)
         this.$router.push('/notfound')
       })
-      .finally(() => {
-        this.loading = false
-        console.log('FINALLY')}
-      )
+      .finally(() => this.loading = false)
   },
   computed: {
     mostRecentOccupancyDate(){
@@ -86,18 +81,22 @@ export default {
 </script>
 
 <style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700;900&display=swap');
+#app {
+  font-family: 'Roboto', sans-serif;
+}
 
 /* Nav Styles */
-#nav {
+#nav-container {
   display: flex;
   justify-content: flex-end;
   box-shadow: 0 2px 2px -6px rgba(0,0,0,0.16);
   font-size:2.2rem;
-  color: rgb(23, 23, 23);
+  color: #274490;
 }
 
-#nav a {
-  color: rgb(23, 23, 23);
+#nav-container a {
+  color: #274490;
   font-weight: bold;
   text-decoration: none;
   transition:  color 200ms cubic-bezier(.4,.4,.25,1), background 200ms cubic-bezier(.4,.4,.25,1);
@@ -106,25 +105,26 @@ export default {
   text-transform: uppercase;
 }
 
-#nav a:hover{
-  border-bottom: 3px solid rgba(23, 23, 23, 0.541);
+#nav-container a:hover{
+  
+  border-bottom: 3px solid rgba(39, 68, 144, 0.54);
   transition: border 200ms cubic-bezier(.4,.4,.25,1)
 }
 
 
-#nav a.router-link-active, #nav a.active {
-  border-bottom: 3px solid rgb(23, 23, 23);
+#nav-container a.router-link-active, #nav-container a.active {
+  border-bottom: 3px solid #274490;
   transition: border 200ms cubic-bezier(.4,.4,.25,1)
 }
 
 nav {
   position: absolute;
-  top: 8rem;
+  top: 8.6rem;
   z-index: 10;
 }
 
 @media (max-width: 680px) {
-  #nav {
+  #nav-container {
     font-size: 1.6rem;
   }
   nav {

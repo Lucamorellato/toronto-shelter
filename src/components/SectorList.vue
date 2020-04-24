@@ -1,14 +1,12 @@
 <template>
-    <div v-show="show == i">
+    <div v-show="show == i" >
         <transition name="fade">
             <p class="top" v-show="show == i"><span class="big">{{sheltersOrganized.length + 1}}</span> shelters in "{{sector.toUpperCase()}}"</p>
         </transition>
         <transition name="accordion" v-on:before-enter="beforeEnter" v-on:enter="enter"
         v-on:before-leave="beforeLeave" v-on:leave="leave">
             <ul  v-show="show == i" class="accordion-content">
-                <div v-for='(shelter, y) in sheltersOrganized' :key='y' >
-                    <Card :shelter="shelter" />
-                </div>
+                <Card v-for='(shelter, y) in sheltersOrganized' :key='y' :shelter="shelter" />
             </ul>
         </transition>
     </div>
@@ -30,13 +28,13 @@ export default {
     computed: {
         totalBeds() {
             return this.sheltersOrganized.reduce((acc, currentValue) => {
-            return acc + currentValue.CAPACITY
-        }, 0);
+                return acc + currentValue.CAPACITY
+            }, 0);
         },
         occupiedBeds() {
             return this.sheltersOrganized.reduce((acc, currentValue) => {
-            return acc + currentValue.OCCUPANCY
-        }, 0);
+                return acc + currentValue.OCCUPANCY
+            }, 0);
         },
         occupiedPercentage(){
             let result = ((this.occupiedBeds / this.totalBeds)*100).toFixed(1)
@@ -78,12 +76,12 @@ export default {
     font-weight: 900;
 }
 
-
 .accordion-content{
     transition: 750ms cubic-bezier(.4,.4,.25,1);
     overflow: hidden;
     width: 100%;
     background: white;
+    margin-bottom: 4rem;
 }
 
 .accordion-content>*{

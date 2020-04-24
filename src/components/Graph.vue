@@ -12,7 +12,6 @@
           a 15.9155 15.9155 0 0 1 0 31.831
           a 15.9155 15.9155 0 0 1 0 -31.831"
       />
-
       <text x="18" y="20.35" class="percentage"><span class="visuallyhidden">{{sector}} capacity at</span>{{occupiedPercentage}}</text>
     </svg>
   </div>
@@ -45,12 +44,12 @@ export default {
 .circle-bg {
   fill: none;
   stroke: #eee;
-  stroke-width: 3.8;
+  stroke-width: 3;
 }
 
 .circle {
   fill: none;
-  stroke-width: 2.8;
+  stroke-width: 3.6;
   stroke-linecap: round;
   animation: progress 1s cubic-bezier(.4,.4,.25,1) forwards;
 }
@@ -88,10 +87,10 @@ export default {
 }
 
 .percentage {
-  fill: #3E00ED;
+  fill: #274490;
   font-family: sans-serif;
   font-size: 0.4em;
-  font-weight: bold;
+  font-weight:900;
   text-anchor: middle;
 }
 

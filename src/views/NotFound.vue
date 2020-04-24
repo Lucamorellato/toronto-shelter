@@ -1,5 +1,5 @@
 <template>
-    <section class="notFound wrapper">
+    <section class="notFound">
         <h1>Page Not Found</h1>
         <h2>Please try a differnet page</h2>
     </section>
@@ -8,9 +8,6 @@
 <script>
 export default {
     name: 'notfound',
-    mounted(){
-        console.log("FUCK")
-    }
 }
 </script>
 

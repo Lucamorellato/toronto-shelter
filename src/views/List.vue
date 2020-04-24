@@ -1,7 +1,9 @@
 <template>
-   <div class="wrapper">
+   <div>
       <h1>List</h1> 
-      <button v-for="(type, i) in typesOfShelters2" :key="i" :class="show == i ? 'active' : null" @click="handleChange(i)">{{type}}</button>
+      <div class="button-container">
+        <button v-for="(type, i) in typesOfShelters2" :key="i" :class="show == i ? 'active' : null" @click="handleChange(i)">{{type}}</button>
+      </div>
       <div v-for='(sector, index, name) in typesOfShelters2' :key='name'>
          <SectorList key="index" :i='index' :show='parseInt(show)' :sheltersOrganized='index === typesOfShelters2.length - 1 ? currentData : sheltersOrganized[index]' :sector='sector' />
       </div>
@@ -52,8 +54,41 @@ export default {
 
 <style scoped>
 
-button.active {
-   background: red;
+button {
+    cursor:pointer;
+    background: white;
+    border: 1px solid #274490;
+    color: #274490;
+    text-transform: uppercase;
+    border-radius: 20px;
+    text-align: center;
+    display:inline-block;
+    height: 30px;
+    padding: 0 10px;
+    max-width:150px;
+    font-size: 1.6rem;
+    margin-right: 1rem;
+    transition: color 0.15s cubic-bezier(.4,.4,.25,1), background 0.15s cubic-bezier(.4,.4,.25,1);
+}
+
+button.active, button:hover {
+   background: #274490;
+   color: white;
+}
+
+.button-container {
+    margin-top: 3rem;
+}
+
+@media (max-width: 550px) {
+
+    .button-container {
+        margin-top: 2rem;
+    }
+    button {
+        margin-top: 1rem;
+        margin-right: 1.5rem;
+    }
 }
 
 </style>

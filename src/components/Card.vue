@@ -3,9 +3,9 @@
         <div class="card-content">
             <p class="name">{{shelter.SHELTER_NAME}}</p>
             <p>{{shelter.PROGRAM_NAME}}</p>
-            <p>{{shelter.SECTOR}} - {{shelter.SHELTER_ADDRESS}}</p>
-            <p class="beds" :class="capacityColor">{{shelter.OCCUPANCY}} of {{shelter.CAPACITY}} Beds <br/><span v-if="capacityColor !== 'red'">At Capacity</span></p>
-            <a :href="`https://maps.google.com/?q=${shelter.SHELTER_ADDRESS}, ${shelter.SHELTER_CITY}, ${shelter.SHELTER_POSTAL_CODE}`" target="_blank">Open in Maps <img class="map-marker" :src="require(`@/assets/map-marker.png`)" alt=""></a> 
+            <p class="address">{{shelter.SECTOR}} - {{shelter.SHELTER_ADDRESS}}</p>
+            <p class="beds" :class="capacityColor">{{shelter.OCCUPANCY}} of {{shelter.CAPACITY}} Beds <br/><span v-if="capacityColor === 'red'">At Capacity</span></p>
+            <a :href="`https://maps.google.com/?q=${shelter.SHELTER_ADDRESS}, ${shelter.SHELTER_CITY}, ${shelter.SHELTER_POSTAL_CODE}`" target="_blank"><img class="map-marker" :src="require(`@/assets/map-marker.png`)" alt="">Open in Maps </a> 
         </div>
         <span class="divider"></span>
     </li>
@@ -50,16 +50,22 @@ methods: {
     margin: 0 auto;
     position: relative;
 }
+
 .card-content {
     padding:4rem;
 }
+
 .card-content p.name {
     font-weight: 900;
     font-size: 1.8rem;
-    margin: 1.6rem 0;
 }
+
 .card-content p {
     margin: 0;
+}
+
+.card a {
+    color: #274490;
 }
 
 .beds {
@@ -90,5 +96,20 @@ methods: {
     height: 20px;
     margin-top:5px;
 }
+
+@media (max-width: 615px) {
+
+    .card p {
+        font-size: 1.6rem;
+    }
+    .address, .beds span {
+        display: none;
+    }
+    .beds {
+        position: static;
+    }
+  
+}
+
 
 </style>

@@ -1,8 +1,8 @@
 <template>
-  <div class="home wrapper">
+  <div class="home">
     <section class="hero-content">
       <h1>Shelter <br/>Occupancy TO</h1>
-      <h2>Last Updated: {{this.months[`${this.mostRecentOccupancyDate.getMonth()}`]}} {{this.mostRecentOccupancyDate.getDate()}}</h2>
+      <h2 class="date">Last Updated: {{this.months[`${this.mostRecentOccupancyDate.getMonth()}`]}} {{this.mostRecentOccupancyDate.getDate()}}</h2>
     </section>
     <section class="sectors">
         <SectorCard sector='All' :i='typesOfShelters.length' :sheltersOrganized='this.currentData'  />
@@ -79,13 +79,17 @@ export default {
 
 <style scoped>
 
+.date {
+  padding: 6rem 0 1rem 0;
+}
+
 .sectors {
   width: 100%;
-  padding: 8rem 0 12rem 0;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
+  padding-bottom: 4rem;
 }
 
 @media (max-width: 1128px) {
@@ -98,7 +102,6 @@ export default {
 }
 @media (max-width: 728px) {
   .sectors {
-    /* grid-template-columns: 1fr; */
     grid-gap: 5rem 0;
   }
 }
